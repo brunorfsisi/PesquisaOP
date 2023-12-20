@@ -48,12 +48,12 @@ def calcular_desempenho_normalizado(df, crit_selected):
         df[f'Desempenho Normalizado {crit}'] = df.apply(lambda row: norm.cdf(row[crit], loc=media_j, scale=desvio_j), axis=1)
 
 # Carregue o DataFrame com os dados do arquivo
-df = pd.read_excel("/media/brunorg/Acer/bk1/PMO/ProjetosPO/p1.xlsx")
+df = pd.read_excel("p1.xlsx")
 df.rename(columns={'Observação': 'Projeto'}, inplace=True)
 
 # Conteúdo do "sigbar" (à esquerda)
 st.sidebar.title('Projetos, Processos e Tecnologia')
-st.sidebar.image('/media/brunorg/Acer/bk1/PMO/ProjetosPO/LM4.png', caption='', use_column_width=True)
+st.sidebar.image('LM4.png', caption='', use_column_width=True)
 paginaSelecionada = st.sidebar.selectbox('Escolha uma opção', ['Análise Multicritério','Método ProPPAGA','Programação Inteira','Simulação de Entrega'])
 
 
@@ -107,7 +107,7 @@ if paginaSelecionada == 'Análise Multicritério':
 
     # Rodapé com tamanho de fonte personalizado
     st.markdown(f"<p style='font-size:{tamanho_fonte}px;'>Este é um exemplo simples para ilustrar o conceito do Método AHP Gaussiano.</p>", unsafe_allow_html=True)
-    df = pd.read_excel("/media/brunorg/Acer/bk1/PMO/ProjetosPO/p1.xlsx")
+    df = pd.read_excel("p1.xlsx")
     df.rename(columns={'Observação': 'Projeto'}, inplace=True)
     df1=df
     # Salvar a primeira coluna (caso haja) e excluí-la temporariamente
