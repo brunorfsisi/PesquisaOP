@@ -954,7 +954,8 @@ elif paginaSelecionada == 'Programação Inteira':
         step=0.01,
         format="%.2f"
     )
-    valor_maximo_investimento_formatado = locale.currency(valor_maximo_investimento, grouping=True, symbol=None)
+    valor_maximo_investimento_formatado = f"{valor_maximo_investimento:,.2f}"
+
     st.text(f"Valor máximo de investimento: R$:{valor_maximo_investimento_formatado}")
 
     
