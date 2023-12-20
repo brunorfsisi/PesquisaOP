@@ -979,7 +979,7 @@ elif paginaSelecionada == 'Programação Inteira':
         if x[projeto].varValue == 1:
             st.write(f"Projeto Selecionado: {projeto}")
             lucro_total = value(prob.objective)
-            lucro_total_formatado = locale.currency(lucro_total, grouping=True, symbol=None)
+            lucro_total_formatado = f"{lucro_total:,.2f}"
     st.write(f"Lucro Total: R$:{lucro_total_formatado}", font_size=18)
     projetos_selecionados = [projeto for projeto in projetos if x[projeto].varValue == 1]
 
