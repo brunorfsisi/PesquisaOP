@@ -748,7 +748,7 @@ elif paginaSelecionada == 'Simulação de Entrega':
         # Coluna da direita com o texto
         with col2x2:
             st.markdown("""
-            <div style='font-size: 24px; line-height: 1.5; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh;'>
+            <div style='font-size: 24px; line-height: 1.5; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 50vh;'>
            O Método de Monte Carlo é uma ferramenta crucial no gerenciamento de riscos de entrega de projetos, particularmente na indústria automotiva. Utilizando dados históricos que incluem montadoras, tipos de projeto, localizações, e datas de início e término, este método simula diversos cenários para prever a probabilidade de cumprir datas de entrega propostas. Ao analisar projetos semelhantes, ele oferece uma estimativa baseada em probabilidades, apoiando os gerentes de projeto na tomada de decisões informadas sobre prazos. Essencialmente, o Método de Monte Carlo transforma dados históricos em insights práticos para otimizar a gestão e entrega de projetos.
             </div>
             """, unsafe_allow_html=True)
@@ -930,7 +930,8 @@ elif paginaSelecionada == 'Programação Inteira':
     import locale
 
     # Define a localização para o formato de moeda (por exemplo, o Brasil)
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    locale.setlocale(locale.LC_ALL, '')
+
 
     st.title("Seleção de Projetos")
 
