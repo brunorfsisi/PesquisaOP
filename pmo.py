@@ -1,21 +1,16 @@
 import streamlit as st
 import pandas as pd
-import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
-import itertools
 import streamlit as st
-import pyodbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import scipy.stats as stats
 import seaborn as sns
 import datetime
 from scipy.stats import norm
 import scipy.stats as stats
-import tempfile
 from pulp import *
 # Função para realizar a simulação de Monte Carlo
 df2 = pd.DataFrame(columns=["Proposta", "Marco"])
