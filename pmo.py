@@ -54,7 +54,7 @@ df.rename(columns={'Observação': 'Projeto'}, inplace=True)
 # Conteúdo do "sigbar" (à esquerda)
 st.sidebar.title('Projetos, Processos e Tecnologia')
 st.sidebar.image('LM4.png', caption='', use_column_width=True)
-paginaSelecionada = st.sidebar.selectbox('Escolha uma opção', ['Análise Multicritério','Método ProPPAGA','Programação Inteira','Simulação de Entrega'])
+paginaSelecionada = st.sidebar.selectbox('Escolha uma opção', ['Análise Multicritério','Método ProPPAGA','Programação Inteira','Simulação de Entrega','Otimização de Processo'])
 
 
 # Título da aplicação
@@ -553,7 +553,73 @@ if paginaSelecionada == 'Análise Multicritério':
         # Espaço entre os métodos
         st.markdown('---')
         pass
-        
+elif paginaSelecionada == 'Otimização de Processo': 
+    # Função para resolver o problema de programação linear inteira
+    def solve_distribution(values, total):
+        # Criar um problema de maximização
+        prob = pulp.LpProblem("ServiceDistribution", pulp.LpMaximize)
+
+        # Variáveis: quantidade de cada serviço
+        quantities = {service: pulp.LpVariable(f"q_{service}", 1, cat=pulp.LpInteger) for service in values}
+
+        # Função objetivo: aproximar-se do valor total sem excedê-lo
+        prob += pulp.lpSum([quantities[service] * val for service, val in values.items()])
+
+        # Restrição: o total não deve exceder o valor desejado
+        prob += pulp.lpSum([quantities[service] * val for service, val in values.items()]) <= total
+
+        # Restrição adicional: minimizar a diferença entre as quantidades
+        for s1 in values:
+            for s2 in values:
+                if s1 != s2:
+                    prob += quantities[s1] - quantities[s2] >= -1
+                    prob += quantities[s1] - quantities[s2] <= 1
+
+        # Resolver o problema
+        prob.solve()
+
+        # Verificar se há uma solução
+        if prob.status != pulp.LpStatusOptimal:
+            return "Não foi possível encontrar uma solução ótima."
+
+        # Retornar os resultados
+        return {service: int(quantities[service].varValue) for service in values}
+
+    # Interface do usuário no Streamlit
+    def main():
+        st.title("Distribuição de Serviços")
+
+        # Entrada do usuário para valores dos serviços e valor total
+        st.sidebar.title("Valores dos Serviços")
+        num_services = st.sidebar.number_input("Quantos serviços diferentes?", min_value=2, value=3)
+        values = {}
+        for i in range(num_services):
+            service_name = st.sidebar.text_input(f"Nome do Serviço {i+1}", f"Serviço {i+1}")
+            service_value = st.sidebar.number_input(f"Valor do {service_name}", min_value=0.01)
+            values[service_name] = service_value
+
+        total_value = st.sidebar.number_input("Valor Total Desejado", min_value=0.01)
+
+        # Botão para calcular distribuição
+        if st.sidebar.button("Calcular Distribuição"):
+            result = solve_distribution(values, total_value)
+
+            # Criar um DataFrame para exibir os resultados
+            df = pd.DataFrame(columns=["Quantidade", "Valor Unitário", "Total por Serviço"])
+            for service, quantity in result.items():
+                df.loc[service] = [quantity, values[service], quantity * values[service]]
+
+            # Adicionar linha com somas e diferença
+            total_distribution = df["Total por Serviço"].sum()
+            df.loc["Total"] = ["-", "-", total_distribution]
+            df.loc["Diferença"] = ["-", "-", total_value - total_distribution]
+
+            # Exibir o DataFrame
+            st.write("Resultado da Distribuição:")
+            st.dataframe(df)
+
+    if __name__ == "__main__":
+        main()             
 elif paginaSelecionada == 'Método ProPPAGA':
    
             st.title("Análise Multicritério de Projetos - Método ProPPAGA")
