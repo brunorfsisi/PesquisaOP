@@ -560,6 +560,7 @@ elif paginaSelecionada == 'Otimização de Processo':
         # Criar um problema de maximização
         prob = pulp.LpProblem("ServiceDistribution", pulp.LpMaximize)
 
+
         # Variáveis: quantidade de cada serviço
         quantities = {service: pulp.LpVariable(f"q_{service}", 1, cat=pulp.LpInteger) for service in values}
 
