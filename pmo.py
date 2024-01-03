@@ -11,6 +11,7 @@ import seaborn as sns
 import datetime
 from scipy.stats import norm
 import scipy.stats as stats
+import pulp
 from pulp import *
 # Função para realizar a simulação de Monte Carlo
 df2 = pd.DataFrame(columns=["Proposta", "Marco"])
