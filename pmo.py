@@ -12,7 +12,7 @@ import datetime
 from scipy.stats import norm
 import scipy.stats as stats
 import pulp
-from pulp import *
+#from pulp import *
 # Função para realizar a simulação de Monte Carlo
 df2 = pd.DataFrame(columns=["Proposta", "Marco"])
 def simular_monte_carlo(media_projeto, desvio_projeto, media_atividades, desvio_atividades, n_simulacoes=10000):
